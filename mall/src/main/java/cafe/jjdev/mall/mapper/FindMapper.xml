@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- Interface Mapper 이름 -->
+<mapper namespace="cafe.jjdev.mall.mapper.FindMapper">
+    <select id="memberPwFind" resultType="cafe.jjdev.mall.vo.Member" parameterType="cafe.jjdev.mall.vo.Member"> 
+    	SELECT
+    			member_pw AS memberPw
+        FROM	member 
+        WHERE	member_id=#{memberId}
+    </select>
+    <select id="memberIdFind" resultType="cafe.jjdev.mall.vo.Member" parameterType="cafe.jjdev.mall.vo.Member"> 
+    	SELECT
+    			member_id AS memberId
+        FROM	member 
+        WHERE	member_phone=#{memberPhone}
+        AND 	member_pw=#{memberPw}
+    </select>
+</mapper>

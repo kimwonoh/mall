@@ -1,0 +1,65 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- Interface Mapper 이름 -->
+<mapper namespace="cafe.jjdev.mall.mapper.BoardMapper">
+			<!-- 메서드이름 -->						<!-- 매개변수이름  마이바티스는 파라메터를 묶어서 받아야된다 Map이나String,int-->
+    <update id="updateBoard" parameterType="cafe.jjdev.mall.vo.Board">
+        UPDATE	board 
+        SET	board_title = #{boardTitle}       <!-- 	? pstmt.setString(1, Board.getBoardTitle()) -->
+			, board_content = #{boardContent} 
+        WHERE board_no = #{boardNo} 
+        AND	board_pw = #{boardPw}
+    </update>
+    
+    <delete id="deleteBoard" parameterType="cafe.jjdev.mall.vo.Board">
+        DELETE FROM board 
+        WHERE board_no = #{boardNo} 
+        AND	board_pw = #{boardPw}
+    </delete>
+    
+    <select id="selectBoard" parameterType="int" resultType="cafe.jjdev.mall.vo.Board"> <!-- select 리절트타입이 리스트이다 -->
+        SELECT	board_no AS boardNo 
+        		,board_title AS boardTitle
+        		, board_content AS boardContent
+	            , board_user AS boardUser
+	            , board_date AS boardDate
+        FROM	board 
+        WHERE	board_no=#{boardNo} <!-- #{boardNo} 바꿔도된다 인트값이 한개분이라 알아서 찾는다 -->
+    </select>
+    
+    <select id="selectBoardList" parameterType="java.util.Map" resultType="cafe.jjdev.mall.vo.Board">
+        SELECT	 board_no AS boardNo
+	             , board_title AS boardTitle
+	             , board_user AS boardUser
+	             , board_date As boardDate
+        FROM	 board 
+        ORDER BY boardNo DESC 
+        LIMIT	 #{beginRow}, #{rowPerPage} <!-- 두개이상데이터 받는방법은 배열,배열을가공한리스트,맵을쓰던지 		 map.put("beginRow", 1); map.put("rowPerPage," 10) java.util.Map에 보냈다-->
+    </select>
+    
+    <select id="selectBoardCount" resultType="int">
+        SELECT	COUNT(*)
+		FROM	board
+    </select>
+    
+    <insert id="insertBoard" parameterType="cafe.jjdev.mall.vo.Board">
+        <selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+			SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO board(
+            board_pw
+            , board_title
+            , board_content
+            , board_user
+            , board_date) 
+        VALUES(
+            #{boardPw}
+            , #{boardTitle}
+            , #{boardContent}
+            , #{boardUser}
+            ,now()
+        )
+    </insert>
+</mapper>

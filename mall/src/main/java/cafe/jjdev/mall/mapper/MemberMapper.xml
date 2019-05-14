@@ -1,0 +1,89 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- Interface Mapper 이름 -->
+<mapper namespace="cafe.jjdev.mall.mapper.MemberMapper">
+	
+	<delete id="deleteMember" parameterType="cafe.jjdev.mall.vo.Member">
+        DELETE FROM member 
+        WHERE member_id = #{memberId} 
+        AND	member_pw = #{memberPw}
+    </delete>
+	<update id="updateMember" parameterType="cafe.jjdev.mall.vo.Member">
+        UPDATE	member
+        SET	 member_pw = #{memberPw}
+        		, member_name = #{memberName}
+	            , member_phone = #{memberPhone}
+	            , member_address = #{memberAddress}
+        WHERE member_id = #{memberId} 
+        AND	member_pw = #{memberPw}
+    </update> 
+	<update id="passWordModifyMember" parameterType="java.util.Map">
+        UPDATE	member
+        SET	member_pw = #{memberPw}       
+        WHERE member_pw = #{getMemberOnePw} 
+        AND	member_id = #{memberId} 
+    </update>    
+	<select id="selectMemberOne" parameterType="int" resultType="cafe.jjdev.mall.vo.Member"> <!-- select 리절트타입이 리스트이다 -->
+        SELECT	member_no AS boardNo 
+        		, member_id AS memberId
+        		, member_pw AS memberPw 
+        		, member_email AS memberEmail
+        		, member_name AS memberName
+	            , member_phone AS memberPhone
+	            , member_address AS memberAddress
+        		, member_gender AS memberGender
+	            , member_level AS memberLevel      
+        FROM	member 
+        WHERE	member_id=#{memberId}
+        AND 	member_pw=#{memberPw}
+    </select>
+    <select id="loginMember" resultType="cafe.jjdev.mall.vo.Member"> 
+    	SELECT	
+    			member_no AS memberNo
+    			, member_id AS memberId
+    			, member_pw AS memberPw
+    			, member_email AS memberEmail
+        		, member_name AS memberName
+        		, member_phone AS memberPhone
+	            , member_address AS memberAddress
+        		, member_gender AS memberGender
+	            , member_level AS memberLevel
+        FROM	member 
+        WHERE	member_id=#{memberId}
+    </select>
+    <insert id="insertMemberConsumer" parameterType="cafe.jjdev.mall.vo.Member">
+    	INSERT INTO member_consumer(
+    		member_no
+    		, member_consumer_date_of_birth)
+    	VALUES(
+    		#{memberNo}
+    		, #{memberConsumerDateOfBirth}
+    		)   	
+    </insert>
+    <insert id="insertMember" parameterType="cafe.jjdev.mall.vo.Member">
+    	<selectKey resultType="int" keyProperty="memberNo" order="AFTER">
+			SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO member(
+            member_id
+            , member_pw
+            , member_email
+            , member_name
+            , member_phone
+            , member_address
+            , member_gender
+            , member_level) 
+        VALUES(
+            #{memberId}
+            , #{memberPw}
+            , #{memberEmail}
+            , #{memberName}
+            , #{memberPhone}
+            , #{memberAddress}
+            , #{memberGender}
+            , #{memberLevel}
+        )
+    </insert>
+</mapper>
