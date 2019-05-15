@@ -44,9 +44,14 @@ public class ProductCommonService {
 		return resultMap;
 	}
 	// 2. 서비스 상세보기 
-	public ProductCommon getProductCommon(int categoryNo, int productCommonNo) {
-		System.out.println("상세보기 서비스 카테고리넘버"+categoryNo);
-		System.out.println("상세보기 서비스 프로덕트커먼넘버"+productCommonNo);
-		return productCommonMapper.selectProductCommonByOne(productCommonNo);
-	}
+	//public ProductCommon getProductCommon(int categoryNo, int productCommonNo) {
+		//System.out.println("상세보기 서비스 카테고리넘버"+categoryNo);
+		//System.out.println("상세보기 서비스 프로덕트커먼넘버"+productCommonNo);	
+		//return productCommonMapper.selectProductCommonByOne(productCommonNo);
+	//}
+	public ProductCommon getProductCommon(int productCommonNo) {
+		
+		return productCommonMapper.selectProductCommonByCategory(productCommonNo);
+		}
+	
 }

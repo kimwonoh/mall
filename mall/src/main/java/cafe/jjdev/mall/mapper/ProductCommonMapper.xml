@@ -4,44 +4,51 @@
   
  <!-- Interface Mapper 이름 -->
 <mapper namespace="cafe.jjdev.mall.mapper.ProductCommonMapper">
-   <!--  <resultMap type="cafe.jjdev.mall.mapper.vo.ProductCommom" id="ProductCommomMap">
+   <resultMap type="cafe.jjdev.mall.vo.ProductCommon" id="ProductCommonMap">
     	<result column="product_common_no" property="productCommonNo"/>
     	<result column="category_no" property="categoryNo"/>
     	<result column="product_common_name" property="productCommonName"/>
+    	<result column="product_common_contents" property="productCommonContents"/>
+    	<result column="product_common_summary" property="productCommonSummary"/>
     	<result column="product_common_price" property="productCommonPrice"/>
     	<result column="product_common_description" property="productCommonDescription"/>
     	<result column="product_common_date" property="productCommonDate"/>
     	<collection property="products" ofType="cafe.jjdev.mall.vo.Product"> 	
     		<id column="product_no" property="productNo"/>
     		<result column="product_common_no" property="productCommonNo"/>
-    		<result column="product_color" property="productColor"/>
-    		<result column="product_size" property="productSize"/>
-    		<result column="product_stock" property="productStock"/>
+    		<result column="product_rental" property="productRental"/>
+    		<result column="product_price" property="productPrice"/>
+    		<result column="product_stock" property="productStock"/> 		
     	</collection>
     </resultMap>
-    <select id="selectProductCommonByCategory" parameterType="int" resultMap="ProductCommomMap"> 
+    <select id="selectProductCommonByCategory" parameterType="int" resultMap="ProductCommonMap"> 
 		SELECT 
 			pc.product_common_no
 			,pc.category_no
 			,pc.product_common_name
+			,pc.product_common_contents
+			,pc.product_common_summary
 			,pc.product_common_price
 			,pc.product_common_description
 			,pc.product_common_date
 			,p.product_no
 			,p.product_common_no
-			,p.product_color
-			,p.product_size
+			,p.product_rental
+			,p.product_price
 			,p.product_stock
 		FROM product_common as pc 
 		INNER join product as p
-		ON pc.product_common_no = p.product_common_no			
-    </select> -->
+		ON pc.product_common_no = p.product_common_no
+		WHERE pc.product_common_no = #{productCommonNo}
+    </select>
     <!-- 페이징 + 검색(이름) 작업 -->
     <select id="selectProductCommonList" parameterType="java.util.Map" resultType="cafe.jjdev.mall.vo.ProductCommon"> 
 		SELECT 
 			product_common_no AS productCommonNo
 			,category_no AS categoryNo
 			,product_common_name AS productCommonName
+			,product_common_contents AS productCommonContents
+			,product_common_summary AS productCommonSummary
 			,product_common_price AS productCommonPrice
 			,product_common_description AS productCommonDescription
 			,product_common_date AS productCommonDate
@@ -58,12 +65,13 @@
 		FROM	product_common
 		WHERE 	category_no= #{categoryNo}
     </select>
-    
     <select id="selectProductCommonByOne" parameterType="int" resultType="cafe.jjdev.mall.vo.ProductCommon"> <!-- select 리절트타입이 리스트이다 -->
         SELECT	
         	product_common_no AS productCommonNo
 			,category_no AS categoryNo
 			,product_common_name AS productCommonName
+			,product_common_contents AS productCommonContents
+			,product_common_summary AS productCommonSummary
 			,product_common_price AS productCommonPrice
 			,product_common_description AS productCommonDescription
 			,product_common_date AS productCommonDate

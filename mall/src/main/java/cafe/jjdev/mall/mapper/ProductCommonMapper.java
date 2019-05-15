@@ -20,4 +20,5 @@ public interface ProductCommonMapper {
 	public int selectProductCommonCount(int categoryNo);
 	//4
 	public ProductCommon selectProductCommonByOne(int productCommonNo);
+
 }

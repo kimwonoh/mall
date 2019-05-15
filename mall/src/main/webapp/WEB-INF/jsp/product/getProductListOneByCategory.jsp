@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>BOARD VIEW(spring mvc 방식)</title>
+<title>상세보기 VIEW(spring mvc 방식)</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -25,16 +25,27 @@
 </head>
 <body>
 	<div class="container">
-		<h1>BOARD VIEW(spring mvc 방식)</h1>
+		<h1>${getProductCommon.productCommonName} 상세보기</h1>
 		<table class="table">
 			<tbody>
 				<tr>
-					<td>제목 :${productCommon.productCommonName}</td>
+					<td>제목 :${getProductCommon.productCommonName}</td>
 				</tr>
 				<c:if test= "${categoryNo == 1}">
-				<tr>
-					<td><img src="/upload/wjsehrtl.jpg"></td>
-				</tr>
+					<c:set var="no">전지적 독자 시점</c:set>
+					<c:set var="no2">만년만에 귀환한 플레이어</c:set>
+					<c:choose>
+				    <c:when test="${name == no}">
+				    	<tr>
+							<td><img src="/upload/wjsehrtl.jpg"></td>
+						</tr>
+					</c:when>
+					<c:when test="${name == no2}">
+				    	<tr>
+							<td><img src="/upload/aksrnlvmf.jpg"></td>
+						</tr>
+					</c:when>
+					</c:choose>
 				</c:if>
 				<c:if test= "${categoryNo == 2}">
 				<tr>
@@ -42,23 +53,36 @@
 				</tr>
 				</c:if>
 				<tr>
-					<td>가격 :${productCommon.productCommonPrice}원</td>
+					<td>편당 대여 가격 : ${getProductCommon.productCommonPrice}원</td>
 				</tr>
 				<tr>
-					<td>장르 :${productCommon.productCommonDescription}</td>
+					<td>장르 :${getProductCommon.productCommonDescription}</td>
 				</tr>
 				<tr>
-					<td>날짜 : ${productCommon.productCommonDate}</td>
-				</tr>			
+					<td>등록 날짜 : ${getProductCommon.productCommonDate}</td>
+				</tr>
+				<tr>
+					<td><select name="">
+							<option value="">==연재중인 소설 목록==</option>
+						<c:forEach var="p" items="${getProductCommon.products}">
+							<option value="${p.productStock}">${p.productStock}</option>
+						</c:forEach>
+					</select>
+					<select name="">
+							<option value="">==구매 여부==</option>
+						<c:forEach var="p" items="${getProductCommon.products}">
+							<option value="${p.productRental}">${p.productRental} : ${p.productPrice}</option>
+						</c:forEach>
+					</select>					
+					</td>
+				</tr>		
 			</tbody>
 		</table>
 		<%-- <a class="btn btn-default"
 			href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${board.boardNo}">수정</a>
 		<a class="btn btn-default"
 			href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${board.boardNo}">삭제</a> --%>
-		<a class="btn btn-default"
-			href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}">글목록</a>
-
+		<a class="btn btn-default" href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&searchWord=${searchWord}&currentPage=${currentPage}">글목록</a>
 </body>
 </html>
 

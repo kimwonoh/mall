@@ -6,9 +6,24 @@ public class ProductCommon {
 	private int productCommonNo;
 	private int categoryNo;
 	private String productCommonName;
+	private String productCommonContents;
+	private String productCommonSummary;
 	private int productCommonPrice;
 	private String productCommonDescription;
 	private String productCommonDate;
+	
+	public String getProductCommonContents() {
+		return productCommonContents;
+	}
+	public void setProductCommonContents(String productCommonContents) {
+		this.productCommonContents = productCommonContents;
+	}
+	public String getProductCommonSummary() {
+		return productCommonSummary;
+	}
+	public void setProductCommonSummary(String productCommonSummary) {
+		this.productCommonSummary = productCommonSummary;
+	}
 	private List<Product> products;
 	
 	public List<Product> getProducts() {
@@ -56,9 +71,11 @@ public class ProductCommon {
 	@Override
 	public String toString() {
 		return "ProductCommon [productCommonNo=" + productCommonNo + ", categoryNo=" + categoryNo
-				+ ", productCommonName=" + productCommonName + ", productCommonPrice=" + productCommonPrice
+				+ ", productCommonName=" + productCommonName + ", productCommonContents=" + productCommonContents
+				+ ", productCommonSummary=" + productCommonSummary + ", productCommonPrice=" + productCommonPrice
 				+ ", productCommonDescription=" + productCommonDescription + ", productCommonDate=" + productCommonDate
-				+ "]";
+				+ ", products=" + products + "]";
 	}
+	
 	
 }

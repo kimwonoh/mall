@@ -1,5 +1,6 @@
 package cafe.jjdev.mall.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,18 +41,29 @@ public class ProductCommonController {
 	}
 	
 	//상세보기
-	@GetMapping(value = "/product/getProductListOneByCategory")
-	public String getProductCommon(Model model, @RequestParam(value="categoryNo") int categoryNo, @RequestParam(value = "productCommonNo") int productCommonNo){
-		System.out.println("프로덕트커먼컨트롤러 상세보기 카테고리넘버"+categoryNo);
-		System.out.println("프로덕트커먼컨트롤러 상세보기 프로덕트커먼넘버"+productCommonNo);
-		ProductCommon productCommon = productCommonService.getProductCommon(categoryNo, productCommonNo);
-		System.out.println("프로덕트커먼컨트롤러 상세보기 카테고리넘버2"+categoryNo);
-		System.out.println("프로덕트커먼컨트롤러 상세보기 프로덕트커먼넘버2"+productCommonNo);
-		//댓글 출력, 파일보여주기
-		model.addAttribute("categoryNo",categoryNo);
-		model.addAttribute("productCommon",productCommon);
-		
-		return "/product/getProductListOneByCategory";
-		}
+		@GetMapping(value = "/product/getProductListOneByCategory")
+		public String getProductCommon(Model model
+												,@RequestParam(value="categoryNo") int categoryNo
+												,@RequestParam(value = "productCommonNo") int productCommonNo){
+			System.out.println("프로덕트커먼컨트롤러 상세보기 카테고리넘버"+categoryNo);
+			System.out.println("프로덕트커먼컨트롤러 상세보기 프로덕트커먼넘버"+productCommonNo);
+			ProductCommon getProductCommon = productCommonService.getProductCommon(productCommonNo);
+			System.out.println("프로덕트커먼컨트롤러 상세보기 카테고리넘버2"+categoryNo);
+			System.out.println("프로덕트커먼컨트롤러 상세보기 프로덕트커먼넘버2"+productCommonNo);
+			System.out.println("프로덕트커먼컨트롤러 상세보기 프로덕트커먼"+getProductCommon);
+			//댓글 출력, 파일보여주기
+			String productCommonName = getProductCommon.getProductCommonName();
+			System.out.println("1 자른거 "+productCommonName);
+			int i = productCommonName.lastIndexOf(" ");
+			System.out.println("2 자른거 "+productCommonName);
+			String name = productCommonName.substring(0, i);
+			System.out.println("3 자른거 "+name);
+			  
+			model.addAttribute("categoryNo",categoryNo);
+			model.addAttribute("getProductCommon",getProductCommon);
+			model.addAttribute("name",name);
+			
+			return "/product/getProductListOneByCategory";
+			}
 	
 }

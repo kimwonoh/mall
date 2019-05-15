@@ -28,19 +28,19 @@ $(document).ready(function(){
     <table class="table table-striped">
         <thead>
             <tr>        
-            	<th>productCommonNo</th>
-                <th>productCommonName</th>
-                <th>productCommonPrice</th>
-                <th>productCommonDescription</th>
-                <th>productCommonDate</th>
+                <th>제목</th>
+                <th>작품 설명</th>
+                <th>연재 확인</th>
+                <th>장르</th>
+                <th>등록날짜</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach var="b" items="${list}">
                 <tr>
-                	<td>${b.productCommonNo}</td>
                     <td><a href="${pageContext.request.contextPath}/product/getProductListOneByCategory?categoryNo=${categoryNo}&productCommonNo=${b.productCommonNo}">${b.productCommonName}</a></td>
-                    <td>${b.productCommonPrice}원</td>
+					<td>${b.productCommonSummary}</td>
+					<td>${b.productCommonContents}</td>
                     <td>${b.productCommonDescription}</td>
                     <td>${b.productCommonDate}</td>
                 </tr>
@@ -54,10 +54,10 @@ $(document).ready(function(){
     </form>
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&currentPage=${currentPage-1}">이전</a></li>
+            <li class="previous"><a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&searchWord=${searchWord}&currentPage=${currentPage-1}">이전</a></li>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&currentPage=${currentPage+1}">다음</a></li>
+            <li class="next"><a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&searchWord=${searchWord}&currentPage=${currentPage+1}">다음</a></li>
         </c:if>
     </ul>
     <div>
